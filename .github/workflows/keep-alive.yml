@@ -1,0 +1,19 @@
+
+name: Keep Backend Awake
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping backend health endpoint
+        env:
+          TARGET_URL: ${{ vars.TARGET_URL }}
+        run: |
+          curl --fail --silent --show-error \
+            --max-time 30 \
+            "$TARGET_URL"
