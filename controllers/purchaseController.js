@@ -290,6 +290,40 @@ const getPurchases = async (req, res) => {
     });
   }
 };
+
+
+const getPurchaseById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid purchase bill ID",
+      });
+    }
+
+    const purchase = await Purchase.findById(id).lean();
+
+    if (!purchase) {
+      return res.status(404).json({
+        success: false,
+        message: "Purchase bill not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: purchase,
+      purchase,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch purchase bill",
+    });
+  }
+};
 // ==========================================
 // UPDATE PURCHASE BILL
 // ==========================================
@@ -627,6 +661,7 @@ const deletePurchase = async (req, res) => {
 module.exports = {
   createPurchase,
   getPurchases,
+  getPurchaseById,
   updatePurchase,
   deletePurchase,
 };

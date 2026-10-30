@@ -44,7 +44,6 @@ async function startServer() {
     await connectDB();
 
     app.listen(PORT, '0.0.0.0', () => {
-      console.log(`Power Cool Backend running on port ${PORT}`);
     });
   } catch (error) {
     console.error('MongoDB connection failed:', error.message);

@@ -321,6 +321,39 @@ const getSales = async (req, res) => {
   }
 };
 
+const getSaleById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid sale bill ID",
+      });
+    }
+
+    const sale = await Sale.findById(id).lean();
+
+    if (!sale) {
+      return res.status(404).json({
+        success: false,
+        message: "Sale bill not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: sale,
+      sale,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch sale bill",
+    });
+  }
+};
+
 // ==========================================
 // DELETE SALE BILL
 // ==========================================
@@ -458,5 +491,6 @@ const deleteSale = async (req, res) => {
 module.exports = {
   createSale,
   getSales,
+  getSaleById,
   deleteSale,
 };

@@ -3,6 +3,7 @@ const express = require('express');
 const {
   createPurchase,
   getPurchases,
+  getPurchaseById,
   updatePurchase,
   deletePurchase,
 } = require('../controllers/purchaseController');
