@@ -10,10 +10,10 @@ const {
 
 const router = express.Router();
 
-// Create Purchase Bill
 router.post('/', createPurchase);
 router.get('/', getPurchases);
+router.get('/:id', getPurchaseById);
 router.put('/:id', updatePurchase);
 router.delete('/:id', deletePurchase);
 
-module.exports = router;
+module.exports = router; 
